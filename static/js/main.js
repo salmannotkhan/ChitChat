@@ -29,6 +29,11 @@ function darkMode() {
     darkBtn.src = "static/images/moon-icon.webp"
     return status
 }
+
+if (localStorage.getItem('darkmode') == "true") {
+    darkMode()
+}
+
 socket.on('recieve', (data) => {
     var msgBubble = document.createElement('div')
     msgBubble.classList.add('msgBubble')
