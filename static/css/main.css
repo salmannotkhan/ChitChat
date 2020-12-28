@@ -1,14 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap");
 * {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   --bg-color: whitesmoke;
   --font-color: black;
   --shadow-color: lightgray;
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 body.dark {
@@ -17,20 +25,52 @@ body.dark {
   --shadow-color: darkslategray;
 }
 
+body.dark .header img {
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+.header {
+  border-bottom: 1px solid var(--shadow-color);
+  background-color: var(--bg-color);
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+}
+
+.header img {
+  height: 25px;
+  width: 25px;
+}
+
 .box {
-  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
 .box .send {
-  position: relative;
+  position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   bottom: 0;
   width: 100%;
+}
+
+.box .send input, .box .send button {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  border: 1px solid var(--shadow-color);
+}
+
+.box .send button {
+  padding: 5px 10px;
 }
 
 .box .send input {
@@ -49,26 +89,42 @@ body.dark {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-bottom: 45px;
 }
 
-.box .history div {
+.box .history .msgBubble {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px;
   border: 1px solid var(--shadow-color);
-  border-radius: 10px;
+  border-radius: 15px;
+  max-width: 50%;
 }
 
-.box .history div.msgSent {
-  background-color: lightcyan;
+.box .history .msgBubble .name {
+  border: none;
+  font-weight: bold;
+}
+
+.box .history .msgBubble small {
+  float: right;
+  font-size: x-small;
+  margin: 10px 0 0 10px;
+}
+
+.box .history .msgBubble.msgSent {
+  background-color: var(--font-color);
+  color: var(--bg-color);
   -ms-flex-item-align: end;
       align-self: flex-end;
+  border-bottom-right-radius: 0;
 }
 
-.box .history div.msgRecieved {
+.box .history .msgBubble.msgRecieved {
   -ms-flex-item-align: start;
       align-self: flex-start;
+  border-bottom-left-radius: 0;
 }
 /*# sourceMappingURL=main.css.map */
