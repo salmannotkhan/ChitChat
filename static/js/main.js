@@ -2,8 +2,9 @@ const sendBox = document.querySelector('.send').children
 const chatBox = document.querySelector('.history')
 const darkBtn = document.querySelector('.header img')
 var socket = io()
-clientId = localStorage.getItem('clientId') 
+clientId = localStorage.getItem('clientId')
 clientName = localStorage.getItem('clientName')
+msgHistory = localStorage.getItem('msgHistory')
 
 if (!clientId) {
     clientId = Math.floor(Math.random() * 10000000000000001)
@@ -17,6 +18,16 @@ if (!clientName) {
         clientName = prompt('Enter your name(Don\'t try to be oversmart enter your proper name):')
     }
     localStorage.setItem('clientName', clientName)
+}
+
+if (!msgHistory) {
+    msgHistory = []
+}
+else {
+    msgHistory = JSON.parse(msgHistory)
+    msgHistory.forEach(msg => {
+        createMsg(msg)
+    })
 }
 
 function darkMode() {
@@ -34,7 +45,7 @@ if (localStorage.getItem('darkmode') == "true") {
     darkMode()
 }
 
-socket.on('recieve', (data) => {
+function createMsg(data) {
     var msgBubble = document.createElement('div')
     msgBubble.classList.add('msgBubble')
     msgBubble.innerHTML = data.message
@@ -52,6 +63,12 @@ socket.on('recieve', (data) => {
     chatBox.append(msgBubble)
     console.log(data)
     window.scrollBy(0, 100)
+}
+
+socket.on('recieve', (data) => {
+    createMsg(data)
+    msgHistory.push(data)
+    localStorage.setItem('msgHistory', JSON.stringify(msgHistory))
 })
 
 sendBox[1].addEventListener('click', () => {
