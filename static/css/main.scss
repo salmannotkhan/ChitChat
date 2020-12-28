@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    --bg-color: whitesmoke;
+    --font-color: black;
+    --shadow-color: lightgray;
+    &.dark {
+        --bg-color: black;
+        --font-color: white;
+        --shadow-color: darkslategray;        
+    }
+}
+
+.box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .send {
+        position: relative;
+        display: flex;
+        bottom: 0;
+        width: 100%;
+        input {
+            flex: 1;
+            padding: 10px;
+        }
+    }
+    .history {
+        display: flex;
+        bottom: 0;
+        flex-direction: column;
+        div {
+            width: max-content;
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid var(--shadow-color);
+            border-radius: 10px;
+            &.msgSent {
+                background-color: lightcyan;
+                align-self: flex-end;
+            }
+            &.msgRecieved {
+                align-self: flex-start;
+            }
+        }
+    }
+}
