@@ -1,87 +1,49 @@
 const sendBox = document.querySelector('.send').children
 const chatBox = document.querySelector('.history')
-const darkBtn = document.querySelector('.header img')
+const onlineCounter = document.querySelector('.header .online')
+const darkBtn = document.querySelector('.header .darkimg')
+const name = document.querySelector('.header .name')
+var clientId = localStorage.getItem('clientId')
+var clientName = localStorage.getItem('clientName')
+var msgHistory = localStorage.getItem('msgHistory')
+var typing = setTimeout(1)
 var socket = io()
-clientId = localStorage.getItem('clientId')
-clientName = localStorage.getItem('clientName')
-msgHistory = localStorage.getItem('msgHistory')
 
 if (!clientId) {
     clientId = Math.floor(Math.random() * 10000000000000001)
     localStorage.setItem('clientId', clientId)
-    console.log(clientId)
 }
 
 if (!clientName) {
-    clientName = prompt('Enter your name:')
-    while (clientName == ''){
-        clientName = prompt('Enter your name(Don\'t try to be oversmart enter your proper name):')
-    }
-    localStorage.setItem('clientName', clientName)
-}
-
-if (!msgHistory) {
-    msgHistory = []
+    setName()
 }
 else {
-    msgHistory = JSON.parse(msgHistory)
-    msgHistory.forEach(msg => {
-        createMsg(msg)
-    })
+    name.innerHTML = clientName + '\'s Lair'
 }
 
-function darkMode() {
-    status = document.querySelector("body").classList.toggle("dark")
-    localStorage.setItem("darkmode", status)
-    if (status == "true") {
-        darkBtn.src = "static/images/sun-icon.webp"
-        return status
-    }
-    darkBtn.src = "static/images/moon-icon.webp"
-    return status
-}
-
-if (localStorage.getItem('darkmode') == "true") {
-    darkMode()
-}
-
-function createMsg(data) {
-    var msgBubble = document.createElement('div')
-    msgBubble.classList.add('msgBubble')
-    msgBubble.innerHTML = data.message
-    msgBubble.innerHTML += data.timestamp.small()
-    if (clientId == data.clientDetails.clientId){
-        msgBubble.classList.add('msgSent')
-    }
-    else {
-        var msgName = document.createElement('div')
-        msgBubble.classList.add('msgRecieved')
-        msgName.innerHTML = data.clientDetails.clientName + ':'
-        msgName.classList.add('name')
-        msgBubble.prepend(msgName)
-    }
-    chatBox.append(msgBubble)
-    console.log(data)
-    window.scrollBy(0, 100)
-}
+socket.emit('connection', clientId)
 
 socket.on('recieve', (data) => {
-    createMsg(data)
     msgHistory.push(data)
+    createMsg(data)
     localStorage.setItem('msgHistory', JSON.stringify(msgHistory))
 })
 
-sendBox[1].addEventListener('click', () => {
-    hours = new Date().toLocaleTimeString()
-    if (sendBox[0].value != ''){
-        data = {
-            'clientDetails': {
-                'clientId': clientId,
-                'clientName': clientName
-            },
-            'message': sendBox[0].value
-        }
-        socket.emit('send', data)
-        sendBox[0].value = ''
+socket.on('connected', (counter) => {
+    onlineCounter.innerHTML = counter + ' Online'
+})
+
+socket.on('disconnected', (counter) => {
+    onlineCounter.innerHTML = counter + ' Online'
+})
+
+socket.on('typerecieve', (data) => {
+    if (clientId != data.clientDetails.clientId) {
+        msgToRemove = createMsg(data)
+        clearTimeout(typing)
+        console.log(data)
+        typing = setTimeout(()=> {
+            msgToRemove.remove()
+        }, 800)
     }
 })

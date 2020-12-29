@@ -2,8 +2,12 @@
 
 {% block content %}
     <div class="header">
-        Salman's Lair
-        <img onclick="darkMode()" src="{{ url_for('static', filename='images/moon-icon.webp') }}" alt="dark">
+        <div class="name" onclick="setName()">
+             's Lair
+        </div>
+        <img onclick="clearHistory()" class="clear" src="{{ url_for('static', filename='images/delete.png')}}" alt="">
+        <div class="online">0 Online</div>
+        <img onclick="darkMode()" class="darkimg" src="{{ url_for('static', filename='images/sun-icon.webp') }}" alt="dark">
     </div>
     <div class="box">
         <div class="history">

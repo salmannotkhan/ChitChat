@@ -22,6 +22,9 @@ body {
         --font-color: white;
         --shadow-color: darkslategray;
         .header {
+            .online {
+                color: greenyellow;
+            }
             img {
                 filter: invert(1);
             }
@@ -32,11 +35,24 @@ body {
 .header {
     border-bottom: 1px solid var(--shadow-color);
     background-color: var(--bg-color);
+    width: 100%;
     z-index: 10;
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
+    .name {
+        flex: 1;
+    }
+    .online {
+        color: darkgreen;
+    }
     img {
+        margin: 0 10px;
         height: 25px;
         width: 25px;
     }
@@ -67,18 +83,20 @@ body {
         display: flex;
         bottom: 0;
         flex-direction: column;
-        margin-bottom: 45px;
+        margin: 45px 0;
         .msgBubble {
-            .name {
-                border: none;
-                font-weight: bold;
-            }
             width: max-content;
             padding: 5px 10px;
             margin: 5px;
             border: 1px solid var(--shadow-color);
             border-radius: 15px;
             max-width: 50%;
+            word-wrap: break-word;
+            .name {
+                border: none;
+                font-weight: bold;
+                text-decoration: underline;
+            }
             small {
                 float: right;
                 font-size: x-small;
@@ -93,6 +111,10 @@ body {
             &.msgRecieved {
                 align-self: flex-start;
                 border-bottom-left-radius: 0;
+            }
+            &.typing {
+                font-weight: 300;
+                font-style: italic;
             }
         }
     }

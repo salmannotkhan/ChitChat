@@ -25,6 +25,10 @@ body.dark {
   --shadow-color: darkslategray;
 }
 
+body.dark .header .online {
+  color: greenyellow;
+}
+
 body.dark .header img {
   -webkit-filter: invert(1);
           filter: invert(1);
@@ -33,17 +37,36 @@ body.dark .header img {
 .header {
   border-bottom: 1px solid var(--shadow-color);
   background-color: var(--bg-color);
+  width: 100%;
   z-index: 10;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 10px;
 }
 
+.header .name {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.header .online {
+  color: darkgreen;
+}
+
 .header img {
+  margin: 0 10px;
   height: 25px;
   width: 25px;
 }
@@ -89,7 +112,7 @@ body.dark .header img {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-bottom: 45px;
+  margin: 45px 0;
 }
 
 .box .history .msgBubble {
@@ -101,11 +124,13 @@ body.dark .header img {
   border: 1px solid var(--shadow-color);
   border-radius: 15px;
   max-width: 50%;
+  word-wrap: break-word;
 }
 
 .box .history .msgBubble .name {
   border: none;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .box .history .msgBubble small {
@@ -126,5 +151,10 @@ body.dark .header img {
   -ms-flex-item-align: start;
       align-self: flex-start;
   border-bottom-left-radius: 0;
+}
+
+.box .history .msgBubble.typing {
+  font-weight: 300;
+  font-style: italic;
 }
 /*# sourceMappingURL=main.css.map */
