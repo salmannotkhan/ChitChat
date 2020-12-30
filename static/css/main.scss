@@ -47,6 +47,7 @@ body {
     padding: 10px;
     .name {
         flex: 1;
+        text-decoration: underline;
     }
     .online {
         color: darkgreen;
@@ -95,7 +96,6 @@ body {
             .name {
                 border: none;
                 font-weight: bold;
-                text-decoration: underline;
             }
             small {
                 float: right;

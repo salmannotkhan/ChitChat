@@ -13,7 +13,7 @@ sendBox[1].addEventListener('click', () => {
     }
 })
 
-sendBox[0].addEventListener('keypress', () => {
+sendBox[0].addEventListener('keydown', () => {
     data = {
         'clientDetails': {
             'clientId': clientId,
